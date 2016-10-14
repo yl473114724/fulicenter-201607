@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.StaticLayout;
 
 import cn.ucai.xm_fulicenter.R;
+import cn.ucai.xm_fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
     private final long sleepTime=2000;
@@ -30,8 +31,8 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                finish();
+                MFGT.gotoMainAcyivity(SplashActivity.this);
+                MFGT.finish(SplashActivity.this);
             }
         }).start();
     }
