@@ -1,10 +1,8 @@
 package cn.ucai.xm_fulicenter.Activity;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.StaticLayout;
 
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.utils.MFGT;
