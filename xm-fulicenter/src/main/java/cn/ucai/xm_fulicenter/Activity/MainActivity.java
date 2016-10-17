@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+
     private void initView() {
         rbs = new RadioButton[5];
         rbs[0] = mlayoutNewGood;
