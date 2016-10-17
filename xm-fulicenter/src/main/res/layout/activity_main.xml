@@ -13,12 +13,7 @@
         android:background="@color/bottom_bar_taobao_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
-        <RadioGroup
-            android:id="@+id/rg_bottom_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <RadioButton
+        <RadioButton
                 android:id="@+id/layout_new_good"
                 android:drawableTop="@drawable/selector_menu_item_new_good"
                 style="@style/menu_item_style"
@@ -26,7 +21,7 @@
                 android:button="@null"
                 android:textColor="@color/main_botton_text_color"
                 android:checked="true"/>
-            <RadioButton
+        <RadioButton
                 android:id="@+id/layout_boutique"
                 android:drawableTop="@drawable/selector_menu_item_boutique"
                 style="@style/menu_item_style"
@@ -34,7 +29,7 @@
                 android:button="@null"
                 android:textColor="@color/main_botton_text_color"
                 android:checked="false"/>
-            <RadioButton
+        <RadioButton
                 android:id="@+id/layout_category"
                 android:drawableTop="@drawable/selector_menu_item_category"
                 style="@style/menu_item_style"
@@ -42,9 +37,9 @@
                 android:button="@null"
                 android:textColor="@color/main_botton_text_color"
                 android:checked="false"/>
-            <RelativeLayout
+        <RelativeLayout
                 style="@style/style_menu_item">
-                <RadioButton
+            <RadioButton
                     android:id="@+id/layout_cart"
                     android:drawableTop="@drawable/selector_menu_item_cart"
                     style="@style/menu_item_style_cart"
@@ -52,7 +47,7 @@
                     android:textColor="@color/main_botton_text_color"
                     android:button="@null"
                     android:checked="false"/>
-                <LinearLayout
+            <LinearLayout
                     android:id="@+id/shopping_cart_num_bg"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
@@ -63,8 +58,7 @@
                     android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:orientation="vertical" >
-
-                    <TextView
+                <TextView
                         android:id="@+id/tvCartHint"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -77,9 +71,9 @@
                         android:textColor="#fff"
                         android:textSize="12dp"
                         android:visibility="gone" />
-                </LinearLayout>
-            </RelativeLayout>
-            <RadioButton
+            </LinearLayout>
+        </RelativeLayout>
+        <RadioButton
                 android:id="@+id/layout_personal_center"
                 android:drawableTop="@drawable/selector_menu_item_personal_center"
                 style="@style/menu_item_style"
@@ -87,8 +81,6 @@
                 android:textColor="@color/main_botton_text_color"
                 android:button="@null"
                 android:checked="false"/>
-        </RadioGroup>
-
     </LinearLayout>
     <View
         android:id="@+id/vline"
