@@ -1,20 +1,25 @@
 package cn.ucai.xm_fulicenter.Activity;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
+import cn.ucai.xm_fulicenter.bean.AlbumsBean;
 import cn.ucai.xm_fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.CommonUtils;
 import cn.ucai.xm_fulicenter.utils.L;
+import cn.ucai.xm_fulicenter.utils.MFGT;
 import cn.ucai.xm_fulicenter.view.FlowIndicator;
 import cn.ucai.xm_fulicenter.view.SlideAutoLoopView;
 
@@ -84,9 +89,43 @@ public class GoodsDatailActivity extends AppCompatActivity {
         mtvGoodName.setText(details.getGoodsName());
         mtvGoodPriceCurrent.setText(details.getCurrencyPrice());
         mtvGoodPriceShop.setText(details.getShopPrice());
+        msalv.startPlayLoop(mindicator,getAlbumImgUrl(details),getAlbumImgCount(details));
+        mwvGoodBrief.loadDataWithBaseURL(null,details.getGoodsBrief(),I.TEXT_HTML,I.UTF_8,null);
     }
 
+
+
+    private String[] getAlbumImgUrl(GoodsDetailsBean details) {
+        String[] urls = new String[]{};
+        if (details.getProperties() != null && details.getProperties().length > 0) {
+            AlbumsBean[] albums = details.getProperties()[0].getAlbums();
+            urls = new String[albums.length];
+            for (int i=0;i<albums.length;i++) {
+                urls[i] = albums[i].getImgUrl();
+            }
+        }
+
+        return urls;
+    }
     private void initView() {
 
     }
+
+    @OnClick(R.id.backClickArea)
+    public void onBackClick() {
+        MFGT.finish(this);
+    }
+
+    public void onBackPressed(View v) {
+        MFGT.finish(this);
+    }
+    private int getAlbumImgCount(GoodsDetailsBean details) {
+
+        if (details.getProperties() != null && details.getProperties().length > 0) {
+            return details.getProperties()[0].getAlbums().length;
+        }
+        return 0;
+    }
+
+
 }
