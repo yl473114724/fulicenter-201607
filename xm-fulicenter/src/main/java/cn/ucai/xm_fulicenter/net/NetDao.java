@@ -3,6 +3,7 @@ package cn.ucai.xm_fulicenter.net;
 import android.content.Context;
 
 import cn.ucai.xm_fulicenter.I;
+import cn.ucai.xm_fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 
 /**
@@ -17,6 +18,15 @@ public class NetDao {
                 .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)
                 .execute(listeners);
-
+    }
+/**
+ * 数据的请求
+ */
+    public static void downloadGoodsDetail(Context context, int goodsId, OkHttpUtils.OnCompleteListener<GoodsDetailsBean> listener) {
+        OkHttpUtils utils = new OkHttpUtils(context);
+        utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
+                .addParam(I.GoodsDetails.KEY_GOODS_ID,String.valueOf(goodsId))
+                .targetClass(GoodsDetailsBean.class)
+                .execute(listener);
     }
 }
