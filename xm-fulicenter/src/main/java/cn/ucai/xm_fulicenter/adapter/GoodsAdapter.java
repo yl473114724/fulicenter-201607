@@ -17,10 +17,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.Activity.GoodsDatailActivity;
+import cn.ucai.xm_fulicenter.Activity.MainActivity;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.utils.ImageLoader;
+import cn.ucai.xm_fulicenter.utils.MFGT;
 
 /**
  * Created by yanglei on 2016/10/17.
@@ -121,7 +123,7 @@ public class GoodsAdapter extends Adapter {
         @OnClick(R.id.layout_goods)
         public void onGoodsItemClick() {
             int goodsId=(int)mlayoutGoods.getTag();
-            mcontext.startActivity(new Intent(mcontext, GoodsDatailActivity.class).putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+            MFGT.gotoGoodsDatailActivity(mcontext,goodsId);
         }
     }
 
