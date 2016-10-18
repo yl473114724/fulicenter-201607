@@ -62,9 +62,15 @@ public class NewGoodsFragment extends Fragment {
             public void onSuccess(NewGoodsBean[] result) {
                 msrl.setRefreshing(false);
                 mtvRefresh.setVisibility(View.GONE);
-                if (result!= null && result.length > 0) {
+                mAdapter.setMore(true);
+                if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> List = ConvertUtils.array2List(result);
                     mAdapter.initData(List);
+                    if (List.size() < I.PAGE_SIZE_DEFAULT) {
+                        mAdapter.setMore(false);
+                    }
+                } else {
+                    mAdapter.setMore(false);
                 }
             }
             @Override
@@ -75,7 +81,7 @@ public class NewGoodsFragment extends Fragment {
                 L.e("error"+error);
             }
         });
-    }
+}
 
     private void initView() {
         msrl.setColorSchemeColors(
