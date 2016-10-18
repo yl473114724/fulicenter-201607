@@ -43,6 +43,7 @@ public class NewGoodsFragment extends Fragment {
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mlist;
     int pageId=1;
+    GridLayoutManager glm;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,10 +54,28 @@ public class NewGoodsFragment extends Fragment {
         mAdapter=new GoodsAdapter(mlist,mcontext);
         initView();
         initData();
+        setListener();
         return layout;
     }
 
-    private void initData() {
+    private void setListener() {
+        setPullUpListener();
+        setPullDownListener();
+    }
+
+    private void setPullDownListener() {
+        msrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                msrl.setRefreshing(true);
+                mtvRefresh.setVisibility(View.VISIBLE);
+                pageId=1;
+                downloadNewGoods(I.ACTION_PULL_DOWN);
+            }
+        });
+    }
+
+    private void downloadNewGoods(final int action) {
         NetDao.downloadNewGoods(mcontext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
@@ -65,7 +84,11 @@ public class NewGoodsFragment extends Fragment {
                 mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> List = ConvertUtils.array2List(result);
-                    mAdapter.initData(List);
+                    if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
+                        mAdapter.initData(List);
+                    } else {
+                        mAdapter.addData(List);
+                    }
                     if (List.size() < I.PAGE_SIZE_DEFAULT) {
                         mAdapter.setMore(false);
                     }
@@ -77,10 +100,36 @@ public class NewGoodsFragment extends Fragment {
             public void onError(String error) {
                 msrl.setRefreshing(false);
                 mtvRefresh.setVisibility(View.GONE);
+                mAdapter.setMore(false);
                 CommonUtils.showLongToast(error);
                 L.e("error"+error);
             }
         });
+    }
+
+    private void setPullUpListener() {
+        mrv.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastposition = glm.findLastVisibleItemPosition();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastposition == mAdapter.getItemCount() - 1 && mAdapter.isMore()) {
+                    pageId++;
+                    downloadNewGoods(I.ACTION_PULL_UP);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstposition = glm.findFirstVisibleItemPosition();
+                msrl.setEnabled(firstposition==0);
+            }
+        });
+    }
+
+    private void initData() {
+        downloadNewGoods(I.ACTION_DOWNLOAD);
 }
 
     private void initView() {
@@ -90,7 +139,7 @@ public class NewGoodsFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow)
         );
-        GridLayoutManager glm = new GridLayoutManager(mcontext, I.COLUM_NUM);
+        glm = new GridLayoutManager(mcontext, I.COLUM_NUM);
         mrv.setLayoutManager(glm);
         mrv.setHasFixedSize(true);
         mrv.setAdapter(mAdapter);

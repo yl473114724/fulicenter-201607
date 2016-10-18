@@ -93,6 +93,11 @@ public class GoodsAdapter extends Adapter {
         return isMore?R.string.load_more:R.string.no_more;
     }
 
+    public void addData(ArrayList<NewGoodsBean> list) {
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     static class GoodsViewHolder extends ViewHolder{
         @BindView(R.id.ivGoodsThumd)
