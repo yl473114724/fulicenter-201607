@@ -41,11 +41,11 @@ public class BoutiqueAdapter extends Adapter <BoutiqueAdapter.BoutiqueViewHolder
 
     @Override
     public void onBindViewHolder(BoutiqueViewHolder holder, int position) {
-            BoutiqueBean boutiqueBean = mlist.get(position);
-            ImageLoader.downloadImg(mContext,((BoutiqueViewHolder)holder).mivBoutiqueImg,boutiqueBean.getImageurl());
-            ((BoutiqueViewHolder) holder).mtvBoutiqueTitle.setText(boutiqueBean.getTitle());
-            ((BoutiqueViewHolder) holder).mtvBoutiqueName.setText(boutiqueBean.getName());
-            ((BoutiqueViewHolder) holder).mtvBoutiqueDescription.setText(boutiqueBean.getDescription());
+        BoutiqueBean boutiqueBean = mlist.get(position);
+        ImageLoader.downloadImg(mContext,holder.mivBoutiqueImg,boutiqueBean.getImageurl());
+        holder.mtvBoutiqueTitle.setText(boutiqueBean.getTitle());
+        holder.mtvBoutiqueName.setText(boutiqueBean.getName());
+        holder.mtvBoutiqueDescription.setText(boutiqueBean.getDescription());
     }
 
     @Override
