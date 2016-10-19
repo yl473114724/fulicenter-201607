@@ -1,6 +1,5 @@
 package cn.ucai.xm_fulicenter.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,7 +21,6 @@ import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.adapter.BoutiqueAdapter;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
-import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.CommonUtils;
@@ -53,10 +51,26 @@ public class BoutiqueFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
+        mlist=new ArrayList<>();
         mAdapter = new BoutiqueAdapter(mContext, mlist);
         initView();
         initData();
         return layout;
+    }
+
+    private void setListener() {
+        setPullDownListener();
+    }
+
+    private void setPullDownListener() {
+        msrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                msrl.setRefreshing(true);
+                mtvRefresh.setVisibility(View.VISIBLE);
+                downloadBoutique(I.ACTION_PULL_DOWN);
+            }
+        });
     }
 
     private void initData() {
@@ -89,7 +103,7 @@ public class BoutiqueFragment extends Fragment {
                 msrl.setRefreshing(false);
                 mtvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(false);
-                CommonUtils.showLongToast(error);
+                CommonUtils.showShortToast(error);
                 L.e("error"+error);
             }
         });
@@ -101,7 +115,7 @@ public class BoutiqueFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow)
         );
-        llm = new GridLayoutManager(mContext, I.COLUM_NUM);
+        llm = new LinearLayoutManager(mContext);
         mrv.setLayoutManager(llm);
         mrv.setHasFixedSize(true);
         mrv.setAdapter(mAdapter);

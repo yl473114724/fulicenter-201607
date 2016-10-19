@@ -102,7 +102,7 @@ public class NewGoodsFragment extends Fragment {
                 msrl.setRefreshing(false);
                 mtvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(false);
-                CommonUtils.showLongToast(error);
+                CommonUtils.showShortToast(error);
                 L.e("error"+error);
             }
         });
