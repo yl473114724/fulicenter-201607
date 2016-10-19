@@ -24,11 +24,12 @@ import cn.ucai.xm_fulicenter.view.FooterViewHolder;
 public class BoutiqueAdapter extends Adapter {
     Context mContext;
 
-    public BoutiqueAdapter(ArrayList<BoutiqueBean> list, Context mContext) {
+    public BoutiqueAdapter(Context mContext, ArrayList<BoutiqueBean> mlist) {
         this.mlist = new ArrayList<>();
-        this.mlist.addAll(list);
+        this.mlist.addAll(mlist);
         this.mContext = mContext;
     }
+
 
     ArrayList<BoutiqueBean> mlist;
     boolean isMore;
@@ -87,6 +88,19 @@ public class BoutiqueAdapter extends Adapter {
             return I.TYPE_FOOTER;
         }
         return I.TYPE_ITEM;
+    }
+
+    public void initData(ArrayList<BoutiqueBean> list) {
+        if (mlist != null) {
+            mlist.clear();
+        }
+        mlist.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void addData(ArrayList<BoutiqueBean> list) {
+        mlist.addAll(list);
+        notifyDataSetChanged();
     }
 
     class BoutiqueViewHolder extends ViewHolder{
