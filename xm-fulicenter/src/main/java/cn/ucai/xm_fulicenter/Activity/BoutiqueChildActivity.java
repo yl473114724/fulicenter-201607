@@ -1,38 +1,35 @@
-package cn.ucai.xm_fulicenter.fragment;
-
+package cn.ucai.xm_fulicenter.Activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.ucai.xm_fulicenter.Activity.MainActivity;
+import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.adapter.GoodsAdapter;
+import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.CommonUtils;
 import cn.ucai.xm_fulicenter.utils.ConvertUtils;
 import cn.ucai.xm_fulicenter.utils.L;
+import cn.ucai.xm_fulicenter.utils.MFGT;
 import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
 
-/**
- * Created by yanglei on 2016/10/17.
- */
-public class NewGoodsFragment extends BaseFragment {
+public class BoutiqueChildActivity extends BaseActivity {
 
+
+    @BindView(R.id.tv_common_title)
+    TextView mtvCommonTitle;
     @BindView(R.id.tv_refresh)
     TextView mtvRefresh;
     @BindView(R.id.rv)
@@ -40,23 +37,27 @@ public class NewGoodsFragment extends BaseFragment {
     @BindView(R.id.srl)
     SwipeRefreshLayout msrl;
 
-    MainActivity mcontext;
+    BoutiqueChildActivity mcontext;
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mlist;
     int pageId=1;
     GridLayoutManager glm;
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    BoutiqueBean boutique;
 
-        View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
-        ButterKnife.bind(this, layout);
-        mcontext= (MainActivity) getContext();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_boutique_child);
+        ButterKnife.bind(this);
+        boutique=(BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
+        if (boutique == null) {
+            finish();
+        }
+        mcontext=this;
         mlist = new ArrayList<>();
         mAdapter=new GoodsAdapter(mlist,mcontext);
-        super.onCreateView(inflater, container, savedInstanceState);
-        return layout;
+        super.onCreate(savedInstanceState);
     }
+
     @Override
     protected void setListener() {
         setPullUpListener();
@@ -76,7 +77,7 @@ public class NewGoodsFragment extends BaseFragment {
     }
 
     private void downloadNewGoods(final int action) {
-        NetDao.downloadNewGoods(mcontext,I.CAT_ID, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(mcontext,boutique.getId(), pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 msrl.setRefreshing(false);
@@ -131,7 +132,9 @@ public class NewGoodsFragment extends BaseFragment {
     @Override
     protected void initData() {
         downloadNewGoods(I.ACTION_DOWNLOAD);
-}
+    }
+
+
 
     @Override
     protected void initView() {
@@ -146,5 +149,11 @@ public class NewGoodsFragment extends BaseFragment {
         mrv.setHasFixedSize(true);
         mrv.setAdapter(mAdapter);
         mrv.addItemDecoration(new SpaceItemDecoration(10));
+        mtvCommonTitle.setText(boutique.getTitle());
+    }
+
+    @OnClick(R.id.backClickArea)
+    public void onClick() {
+        MFGT.finish(this);
     }
 }

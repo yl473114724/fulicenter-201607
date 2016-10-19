@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import cn.ucai.xm_fulicenter.Activity.BoutiqueChildActivity;
 import cn.ucai.xm_fulicenter.Activity.GoodsDatailActivity;
 import cn.ucai.xm_fulicenter.Activity.MainActivity;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
+import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
 
 /**
  * Created by yanglei on 2016/10/14.
@@ -38,5 +40,11 @@ public class MFGT {
     public static void startActivity(Context context,Intent intent) {
         context.startActivity(intent);
         ((Activity)context).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+    }
+    public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean) {
+        Intent intent = new Intent();
+        intent.setClass(context, BoutiqueChildActivity.class);
+        intent.putExtra(I.Boutique.CAT_ID, bean);
+        startActivity(context,intent);
     }
 }
