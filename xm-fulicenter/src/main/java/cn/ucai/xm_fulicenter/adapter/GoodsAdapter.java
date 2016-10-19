@@ -23,6 +23,7 @@ import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.utils.ImageLoader;
 import cn.ucai.xm_fulicenter.utils.MFGT;
+import cn.ucai.xm_fulicenter.view.FooterViewHolder;
 
 /**
  * Created by yanglei on 2016/10/17.
@@ -124,16 +125,6 @@ public class GoodsAdapter extends Adapter {
         public void onGoodsItemClick() {
             int goodsId=(int)mlayoutGoods.getTag();
             MFGT.gotoGoodsDatailActivity(mcontext,goodsId);
-        }
-    }
-
-    static class FooterViewHolder extends ViewHolder{
-        @BindView(R.id.tvFooter)
-        TextView tvFooter;
-
-        FooterViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
         }
     }
 }
