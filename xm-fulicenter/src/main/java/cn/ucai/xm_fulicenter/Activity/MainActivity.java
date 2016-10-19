@@ -17,8 +17,9 @@ import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.xm_fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.xm_fulicenter.utils.L;
+import cn.ucai.xm_fulicenter.utils.MFGT;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     int index;
@@ -43,11 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         L.i("MainActivity onCreate");
-        initView();
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void initData() {
         initFragment();
     }
 
@@ -66,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-
-    private void initView() {
+    @Override
+    protected  void initView() {
         rbs = new RadioButton[5];
         rbs[0] = mlayoutNewGood;
         rbs[1] = mlayoutBoutique;
@@ -96,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         setFragment();
+
     }
+
     private void setFragment() {
         if (index != currentindex) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -118,5 +129,8 @@ public class MainActivity extends AppCompatActivity {
                 rbs[i].setChecked(false);
             }
         }
+    }
+    public void onBackPressed( ) {
+        finish();
     }
 }
