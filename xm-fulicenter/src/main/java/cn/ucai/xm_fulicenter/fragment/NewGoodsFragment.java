@@ -31,7 +31,7 @@ import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
 /**
  * Created by yanglei on 2016/10/17.
  */
-public class NewGoodsFragment extends Fragment {
+public class NewGoodsFragment extends BaseFragment {
 
     @BindView(R.id.tv_refresh)
     TextView mtvRefresh;
@@ -48,18 +48,17 @@ public class NewGoodsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
         mcontext= (MainActivity) getContext();
         mlist = new ArrayList<>();
         mAdapter=new GoodsAdapter(mlist,mcontext);
-        initView();
-        initData();
-        setListener();
+        super.onCreateView(inflater, container, savedInstanceState);
         return layout;
     }
-
-    private void setListener() {
+    @Override
+    protected void setListener() {
         setPullUpListener();
         setPullDownListener();
     }
@@ -102,7 +101,7 @@ public class NewGoodsFragment extends Fragment {
                 msrl.setRefreshing(false);
                 mtvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(false);
-                CommonUtils.showShortToast(error);
+                CommonUtils.showLongToast(error);
                 L.e("error"+error);
             }
         });
@@ -129,11 +128,13 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         downloadNewGoods(I.ACTION_DOWNLOAD);
 }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         msrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.xm_fulicenter.Activity.MainActivity;
-import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.adapter.BoutiqueAdapter;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
@@ -31,7 +30,7 @@ import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
  * Created by yanglei on 2016/10/19.
  */
 
-public class BoutiqueFragment extends Fragment {
+public class BoutiqueFragment extends BaseFragment {
     @BindView(R.id.tv_refresh)
     TextView mtvRefresh;
     @BindView(R.id.rv)
@@ -52,12 +51,11 @@ public class BoutiqueFragment extends Fragment {
         mContext = (MainActivity) getContext();
         mlist=new ArrayList<>();
         mAdapter = new BoutiqueAdapter(mContext, mlist);
-        initView();
-        initData();
+        super.onCreateView(inflater, container, savedInstanceState);
         return layout;
     }
-
-    private void setListener() {
+    @Override
+    protected void setListener() {
         setPullDownListener();
     }
 
@@ -73,7 +71,8 @@ public class BoutiqueFragment extends Fragment {
         });
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         downloadBoutique();
     }
 
@@ -97,7 +96,8 @@ public class BoutiqueFragment extends Fragment {
             }
         });
     }
-    private void initView() {
+    @Override
+    protected void initView() {
         msrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
