@@ -11,14 +11,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import javax.crypto.NullCipher;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.adapter.GoodsAdapter;
+import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
@@ -26,7 +25,10 @@ import cn.ucai.xm_fulicenter.utils.CommonUtils;
 import cn.ucai.xm_fulicenter.utils.ConvertUtils;
 import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.MFGT;
+import cn.ucai.xm_fulicenter.view.CatChildFilterButton;
 import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
+
+import static android.R.id.list;
 
 public class CategoryChildActivity extends BaseActivity {
 
@@ -51,8 +53,13 @@ public class CategoryChildActivity extends BaseActivity {
     boolean addTimeAsc = false;
     boolean priceAsc = false;
     int sortBy = I.SORT_BY_ADDTIME_DESC;
+    @BindView(R.id.btnCatChildFilter)
+    CatChildFilterButton mbtnCatChildFilter;
+    String groupNmae;
+    ArrayList<CategoryChildBean> mChildList;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_category_child);
         ButterKnife.bind(this);
@@ -63,6 +70,8 @@ public class CategoryChildActivity extends BaseActivity {
         if (catId == 0) {
             finish();
         }
+        groupNmae=getIntent().getStringExtra(I.CategoryGroup.NAME);
+        mChildList= (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra(I.CategoryChild.ID);
         super.onCreate(savedInstanceState);
     }
 
@@ -141,6 +150,7 @@ public class CategoryChildActivity extends BaseActivity {
     @Override
     protected void initData() {
         downloadCategoryGoods(I.ACTION_DOWNLOAD);
+        mbtnCatChildFilter.setOnCatFilterClickListener(groupNmae,mChildList);
     }
 
     @Override
@@ -156,6 +166,7 @@ public class CategoryChildActivity extends BaseActivity {
         mrv.setHasFixedSize(true);
         mrv.setAdapter(mAdapter);
         mrv.addItemDecoration(new SpaceItemDecoration(10));
+        mbtnCatChildFilter.setText(groupNmae);
 
     }
 
