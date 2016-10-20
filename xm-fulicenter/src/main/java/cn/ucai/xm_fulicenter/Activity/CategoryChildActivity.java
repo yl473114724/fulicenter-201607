@@ -170,7 +170,8 @@ public class CategoryChildActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_sort_price:
                 if (priceAsc) {
-                    sortBy = I.SORT_BY_PRICE_ASC;.
+                    sortBy = I.SORT_BY_PRICE_ASC;
+
                     right = getResources().getDrawable(R.mipmap.arrow_order_up);
                 } else {
                     sortBy = I.SORT_BY_PRICE_DESC;
