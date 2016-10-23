@@ -3,6 +3,7 @@ package cn.ucai.xm_fulicenter.net;
 import android.content.Context;
 
 import cn.ucai.xm_fulicenter.I;
+import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
 import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
 import cn.ucai.xm_fulicenter.bean.CategoryGroupBean;
@@ -74,5 +75,14 @@ public class NetDao {
                 .post()
                 .execute(listener);
 
+    }
+
+    public static void login(Context context, String username, String password, OkHttpUtils.OnCompleteListener<Result> listener) {
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_LOGIN)
+                .addParam(I.User.USER_NAME, username)
+                .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
+                .targetClass(Result.class)
+                .execute(listener);
     }
 }
