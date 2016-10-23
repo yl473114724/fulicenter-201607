@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.xm_fulicenter.FuLiCenterApplication;
 import cn.ucai.xm_fulicenter.R;
 
 import cn.ucai.xm_fulicenter.fragment.BoutiqueFragment;
@@ -107,7 +108,12 @@ public class MainActivity extends BaseActivity {
                 index = 3;
                 break;
             case R.id.layout_personal_center:
-                index = 4;
+                if (FuLiCenterApplication.getUsername() == null) {
+                    MFGT.gotoLogin(this);
+
+                } else {
+                    index = 4;
+                }
                 break;
         }
         setFragment();

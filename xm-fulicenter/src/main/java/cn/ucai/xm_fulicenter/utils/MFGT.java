@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import cn.ucai.xm_fulicenter.Activity.BoutiqueChildActivity;
 import cn.ucai.xm_fulicenter.Activity.CategoryChildActivity;
 import cn.ucai.xm_fulicenter.Activity.GoodsDatailActivity;
+import cn.ucai.xm_fulicenter.Activity.LoginActivity;
 import cn.ucai.xm_fulicenter.Activity.MainActivity;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
@@ -58,5 +59,10 @@ public class MFGT {
         intent.putExtra(I.CategoryGroup.NAME, groupName);
         intent.putExtra(I.CategoryChild.ID, list);
         startActivity(context,intent);
+    }
+
+    public static void gotoLogin(Activity context) {
+        startActivity(context, LoginActivity.class);
+
     }
 }
