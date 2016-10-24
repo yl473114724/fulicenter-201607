@@ -28,7 +28,6 @@ import cn.ucai.xm_fulicenter.utils.MFGT;
 import cn.ucai.xm_fulicenter.view.CatChildFilterButton;
 import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
 
-import static android.R.id.list;
 
 public class CategoryChildActivity extends BaseActivity {
 

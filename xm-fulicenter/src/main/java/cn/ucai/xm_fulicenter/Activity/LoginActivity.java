@@ -10,6 +10,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.internal.Utils;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.Result;
@@ -19,6 +20,7 @@ import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.CommonUtils;
 import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.MFGT;
+import cn.ucai.xm_fulicenter.utils.ResultUtils;
 
 
 public class LoginActivity extends BaseActivity {
@@ -87,11 +89,11 @@ public class LoginActivity extends BaseActivity {
         final ProgressDialog pd = new ProgressDialog(mContext);
         pd.setMessage(getResources().getString(R.string.logining));
         pd.show();
-        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
+        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(Result result) {
-                pd.dismiss();
-                L.e(TAG, "result=" + result);
+            public void onSuccess(String s) {
+                Result result=ResultUtils.getResultFromJson(s, Utils.class);
+                L.e(TAG, "String=" + result);
                 if (result == null) {
                     CommonUtils.showLongToast(R.string.login_fail);
                 } else {
@@ -109,6 +111,7 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 }
+                pd.dismiss();
             }
 
             @Override
