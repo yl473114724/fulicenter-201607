@@ -18,6 +18,7 @@ import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.xm_fulicenter.fragment.CategoryFragment;
 import cn.ucai.xm_fulicenter.fragment.NewGoodsFragment;
+import cn.ucai.xm_fulicenter.fragment.PersonalCenterFragment;
 import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.MFGT;
 
@@ -31,6 +32,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mCategoryFragment;
+    PersonalCenterFragment mpersonalCenterFragment;
 
     @BindView(R.id.layout_new_good)
     RadioButton mlayoutNewGood;
@@ -68,9 +70,11 @@ public class MainActivity extends BaseActivity {
         mNewGoodsFragment = new NewGoodsFragment();
         mBoutiqueFragment = new BoutiqueFragment();
         mCategoryFragment = new CategoryFragment();
+        mpersonalCenterFragment = new PersonalCenterFragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
         mFragments[2] = mCategoryFragment;
+        mFragments[4] = mpersonalCenterFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, mNewGoodsFragment)
@@ -108,7 +112,7 @@ public class MainActivity extends BaseActivity {
                 index = 3;
                 break;
             case R.id.layout_personal_center:
-                if (FuLiCenterApplication.getUsername() == null) {
+                if (FuLiCenterApplication.getUser() == null) {
                     MFGT.gotoLogin(this);
 
                 } else {
