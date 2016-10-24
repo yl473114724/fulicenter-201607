@@ -1,6 +1,7 @@
 package cn.ucai.xm_fulicenter.Activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentContainer;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.xm_fulicenter.FuLiCenterApplication;
+import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 
 import cn.ucai.xm_fulicenter.fragment.BoutiqueFragment;
@@ -23,7 +25,7 @@ import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.MFGT;
 
 public class MainActivity extends BaseActivity {
-
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     int index;
     int currentindex;
@@ -114,7 +116,6 @@ public class MainActivity extends BaseActivity {
             case R.id.layout_personal_center:
                 if (FuLiCenterApplication.getUser() == null) {
                     MFGT.gotoLogin(this);
-
                 } else {
                     index = 4;
                 }
@@ -148,5 +149,23 @@ public class MainActivity extends BaseActivity {
     }
     public void onBackPressed( ) {
         finish();
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.e("onRestart.......");
+        setFragment();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        L.e(TAG, "onActivityResult,requestCode=" + requestCode);
+        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
+            index = 4;
+        }
     }
 }
