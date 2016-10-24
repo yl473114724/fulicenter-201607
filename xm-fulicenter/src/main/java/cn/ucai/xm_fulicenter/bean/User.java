@@ -91,4 +91,7 @@ public class User {
                 ", mavatarLastUpdateTime='" + mavatarLastUpdateTime + '\'' +
                 '}';
     }
+
+
+
 }
