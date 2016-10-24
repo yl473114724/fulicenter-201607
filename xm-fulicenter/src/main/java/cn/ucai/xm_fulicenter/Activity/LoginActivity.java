@@ -16,6 +16,7 @@ import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.Result;
 import cn.ucai.xm_fulicenter.bean.User;
+import cn.ucai.xm_fulicenter.dao.SharePrefrenceUtils;
 import cn.ucai.xm_fulicenter.dao.UserDao;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
@@ -94,7 +95,7 @@ public class LoginActivity extends BaseActivity {
         NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
-                Result result=ResultUtils.getResultFromJson(s, Utils.class);
+                Result result=ResultUtils.getResultFromJson(s, User.class);
                 L.e(TAG, "String=" + result);
                 if (result == null) {
                     CommonUtils.showLongToast(R.string.login_fail);
@@ -105,6 +106,7 @@ public class LoginActivity extends BaseActivity {
                         UserDao dao = new UserDao(mContext);
                         boolean isSuccess = dao.saveUser(user);
                         if (isSuccess) {
+                            SharePrefrenceUtils.getInstance(mContext).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUser(user);
                             MFGT.finish(mContext);
                         } else {
