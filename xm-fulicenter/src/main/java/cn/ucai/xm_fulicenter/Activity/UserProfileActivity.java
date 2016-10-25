@@ -39,8 +39,7 @@ public class UserProfileActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        DisplayUtils.initBackWithTitle(mContext,getResources().getString(R.string.user_profile));
-    }
+        DisplayUtils.initBackWithTitle(mContext,getResources().getString(R.string.user_profile));    }
 
     @Override
     protected void initData() {

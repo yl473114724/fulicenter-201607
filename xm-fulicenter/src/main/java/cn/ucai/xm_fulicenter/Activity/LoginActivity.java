@@ -10,7 +10,6 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.internal.Utils;
 import cn.ucai.xm_fulicenter.FuLiCenterApplication;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
@@ -24,6 +23,7 @@ import cn.ucai.xm_fulicenter.utils.CommonUtils;
 import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.MFGT;
 import cn.ucai.xm_fulicenter.utils.ResultUtils;
+import cn.ucai.xm_fulicenter.view.DisplayUtils;
 
 
 public class LoginActivity extends BaseActivity {
@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        DisplayUtils.initBackWithTitle(mContext,getResources().getString(R.string.login));
     }
 
     @OnClick({R.id.btn_login, R.id.btn_register})

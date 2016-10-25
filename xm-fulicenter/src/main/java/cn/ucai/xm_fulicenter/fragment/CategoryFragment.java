@@ -63,10 +63,10 @@ public class CategoryFragment extends BaseFragment {
         NetDao.downloadCategoryGroup(mContext, new OkHttpUtils.OnCompleteListener<CategoryGroupBean[]>() {
             @Override
             public void onSuccess(CategoryGroupBean[] result) {
-                L.e("downloadGroup,result="+result);
+
                 if (result != null && result.length > 0) {
                     ArrayList<CategoryGroupBean> groupList = ConvertUtils.array2List(result);
-                    L.e("groupList="+groupList.size());
+
                     mGroupList.addAll(groupList);
                     for (int i=0;i<groupList.size();i++) {
                         mChildList.add(new ArrayList<CategoryChildBean>());

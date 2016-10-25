@@ -84,6 +84,5 @@ public class MFGT {
 
     public static void gotoSettings(Activity context) {
         startActivity(context, UserProfileActivity.class);
-
     }
 }
