@@ -1,7 +1,9 @@
 package cn.ucai.xm_fulicenter.bean;
 
+import cn.ucai.xm_fulicenter.I;
+
 /**
- * Created by yanglei on 2016/10/23.
+ * Created by xiaomiao on 2016/10/23.
  */
 
 public class User {
@@ -56,7 +58,7 @@ public class User {
     }
 
     public String getMavatarSuffix() {
-        return mavatarSuffix;
+        return mavatarSuffix != null ? mavatarSuffix : I.AVATAR_SUFFIX_JPG;
     }
 
     public void setMavatarSuffix(String mavatarSuffix) {
@@ -91,7 +93,4 @@ public class User {
                 ", mavatarLastUpdateTime='" + mavatarLastUpdateTime + '\'' +
                 '}';
     }
-
-
-
 }

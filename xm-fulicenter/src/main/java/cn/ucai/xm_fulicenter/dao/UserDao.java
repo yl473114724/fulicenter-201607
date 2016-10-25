@@ -5,7 +5,7 @@ import android.content.Context;
 import cn.ucai.xm_fulicenter.bean.User;
 
 /**
- * Created by yanglei on 2016/10/24.
+ * Created by xiaomiao on 2016/10/24.
  */
 
 public class UserDao {
@@ -34,3 +34,4 @@ public class UserDao {
         return DBManager.getInstance().updateUser(user);
     }
 }
+
