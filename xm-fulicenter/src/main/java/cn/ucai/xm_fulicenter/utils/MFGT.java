@@ -12,6 +12,7 @@ import cn.ucai.xm_fulicenter.Activity.GoodsDatailActivity;
 import cn.ucai.xm_fulicenter.Activity.LoginActivity;
 import cn.ucai.xm_fulicenter.Activity.MainActivity;
 import cn.ucai.xm_fulicenter.Activity.RegisterActivity;
+import cn.ucai.xm_fulicenter.Activity.UserProfileActivity;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
@@ -79,5 +80,10 @@ public class MFGT {
     public static void startActivityForResult(Activity context, Intent intent, int requestCode) {
         context.startActivityForResult(intent,requestCode);
         context.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+    }
+
+    public static void gotoSettings(Activity context) {
+        startActivity(context, UserProfileActivity.class);
+
     }
 }

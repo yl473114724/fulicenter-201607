@@ -58,6 +58,7 @@ public class PersonalCenterFragment extends BaseFragment {
         }else{
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mIvUserAvatar);
             mTvUserName.setText(user.getMuserNick());
+
         }
     }
 
@@ -66,7 +67,11 @@ public class PersonalCenterFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.tv_center_settings)
-    public void onClick() {
+    @OnClick({R.id.tv_center_settings,R.id.center_user_info})
+    public void gotoSettings() {
+        MFGT.gotoSettings(mContext);
+    }
+
+    public void initOrderList() {
     }
 }
