@@ -23,69 +23,98 @@ import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
  * Created by yanglei on 2016/10/14.
  */
 public class MFGT {
-    public static void finish(Activity activity) {
+    /**
+     * 设置动画
+     * @param activity
+     */
+    public static void finish(Activity activity){
         activity.finish();
-        activity.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
     }
 
-    public static void gotoMainAcyivity(Activity context) {
+    /**
+     * 跳转到主页
+     * @param context
+     */
+    public static void gotoMainAcyivity(Activity context){
         startActivity(context, MainActivity.class);
     }
 
-    public static void startActivity(Activity context, Class<?> cls) {
+    /**
+     *实现intent的跳转 并设置Context的动画
+     * @param context
+     * @param cls
+     */
+    public static void startActivity(Activity context,Class<?> cls){
         Intent intent = new Intent();
-        intent.setClass(context, cls);
-        startActivity(context, intent);
+        intent.setClass(context,cls);
+        startActivity(context,intent);
     }
 
-    public static void gotoGoodsDatailActivity(Context context, int goodsId) {
+    /**
+     * 实现从商品跳转到商品详细(二级界面)的一个跳转，并设置动画
+     * @param context
+     * @param goodsId
+     */
+    public static void gotoGoodsDatailActivity(Context context, int goodsId){
         Intent intent = new Intent();
         intent.setClass(context, GoodsDatailActivity.class);
         intent.putExtra(I.GoodsDetails.KEY_GOODS_ID, goodsId);
-        startActivity(context, intent);
+        startActivity(context,intent);
     }
 
     public static void startActivity(Context context, Intent intent) {
         context.startActivity(intent);
-        ((Activity) context).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        ((Activity)context).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 
-    public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean) {
+    /**
+     * 实现从精选跳转到精选详情（二级界面）的跳转，并设置动画
+     * @param context
+     * @param bean
+     */
+    public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean){
         Intent intent = new Intent();
-        intent.setClass(context, BoutiqueChildActivity.class);
+        intent.setClass(context,BoutiqueChildActivity.class);
         intent.putExtra(I.Boutique.CAT_ID, bean);
-        startActivity(context, intent);
+        startActivity(context,intent);
     }
 
-    public static void gotoCategoryChildActivity(Context context, int catId, String groupName, ArrayList<CategoryChildBean> list) {
+    /**
+     * 实现从分类跳转到分类商品详细(二级界面)的一个跳转，并设置动画
+     * @param context
+     * @param catId
+     */
+    public static void gotoCategoryChildActivity(Context context, int catId, String groupName, ArrayList<CategoryChildBean> list){
         Intent intent = new Intent();
-        intent.setClass(context, CategoryChildActivity.class);
+        intent.setClass(context,CategoryChildActivity.class);
         intent.putExtra(I.CategoryChild.CAT_ID, catId);
         intent.putExtra(I.CategoryGroup.NAME, groupName);
-        intent.putExtra(I.CategoryChild.ID, list);
-        startActivity(context, intent);
+        intent.putExtra(I.CategoryChild.ID,list);
+        startActivity(context,intent);
     }
 
-    public static void gotoLogin(Activity context){
+    public static void gotoLogin(Activity context) {
         Intent intent = new Intent();
-        intent.setClass(context,LoginActivity.class);
+        intent.setClass(context, LoginActivity.class);
         startActivityForResult(context,intent,I.REQUEST_CODE_LOGIN);
     }
 
     public static void gotoRegister(Activity context) {
         Intent intent = new Intent();
         intent.setClass(context, RegisterActivity.class);
-        startActivityForResult(context,intent, I.REQUEST_CODE_REGISTER);
+        startActivityForResult(context,intent,I.REQUEST_CODE_REGISTER);
     }
 
-    public static void startActivityForResult(Activity context, Intent intent, int requestCode) {
+    public static void startActivityForResult(Activity context,Intent intent,int requestCode){
         context.startActivityForResult(intent,requestCode);
-        context.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 
     public static void gotoSettings(Activity context) {
         startActivity(context, UserProfileActivity.class);
     }
+
     public static void gotoupdateNick(Activity context) {
         startActivityForResult(context,new Intent(context,UpdateNickActivity.class),I.REQUEST_CODE_NICK);
     }
