@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -65,7 +66,7 @@ public class PersonalCenterFragment extends BaseFragment {
         if (user == null) {
             MFGT.gotoLogin(mContext);
         } else {
-            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mIvUserAvatar);
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
             mTvUserName.setText(user.getMuserNick());
         }
 
@@ -81,16 +82,21 @@ public class PersonalCenterFragment extends BaseFragment {
         super.onResume();
         user = FuLiCenterApplication.getUser();
         if (user != null) {
-            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mIvUserAvatar);
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
             mTvUserName.setText(user.getMuserNick());
             syncUserInfo();
             syncCollectsCount();
         }
     }
 
-    @OnClick({R.id.tv_center_settings,R.id.center_user_info})
+    @OnClick({R.id.tv_center_settings, R.id.center_user_info})
     public void gotoSettings() {
         MFGT.gotoSettings(mContext);
+    }
+
+    @OnClick(R.id.layout_center_collect)
+    public void gotoCollectsList() {
+        MFGT.gotoCollects(mContext);
     }
 
     private void syncUserInfo() {
@@ -106,7 +112,7 @@ public class PersonalCenterFragment extends BaseFragment {
                         if (b) {
                             FuLiCenterApplication.setUser(u);
                             user = u;
-                            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mIvUserAvatar);
+                            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
                             mTvUserName.setText(user.getMuserNick());
                         }
                     }

@@ -9,6 +9,7 @@ import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
 import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
 import cn.ucai.xm_fulicenter.bean.CategoryGroupBean;
+import cn.ucai.xm_fulicenter.bean.CollectBean;
 import cn.ucai.xm_fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.xm_fulicenter.bean.MessageBean;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
@@ -122,4 +123,14 @@ public class NetDao {
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
+    public static void downloadCollects(Context context, String username, int pageId, OkHttpUtils.OnCompleteListener<CollectBean[]> listener){
+        OkHttpUtils<CollectBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.PAGE_ID,String.valueOf(pageId))
+                .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(CollectBean[].class)
+                .execute(listener);
+
     }
+}
