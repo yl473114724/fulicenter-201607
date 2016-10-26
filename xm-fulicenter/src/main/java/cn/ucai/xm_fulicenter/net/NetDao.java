@@ -10,6 +10,7 @@ import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
 import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
 import cn.ucai.xm_fulicenter.bean.CategoryGroupBean;
 import cn.ucai.xm_fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.xm_fulicenter.bean.MessageBean;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.bean.Result;
 import cn.ucai.xm_fulicenter.utils.MD5;
@@ -114,4 +115,11 @@ public class NetDao {
                 .execute(listener);
 
     }
-}
+    public static void getCollectsCount(Context context, String username, OkHttpUtils.OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+    }

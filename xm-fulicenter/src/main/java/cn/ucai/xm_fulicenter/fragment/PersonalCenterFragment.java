@@ -14,12 +14,14 @@ import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.Activity.MainActivity;
 import cn.ucai.xm_fulicenter.FuLiCenterApplication;
 import cn.ucai.xm_fulicenter.R;
+import cn.ucai.xm_fulicenter.bean.MessageBean;
 import cn.ucai.xm_fulicenter.bean.Result;
 import cn.ucai.xm_fulicenter.bean.User;
 import cn.ucai.xm_fulicenter.dao.UserDao;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.ImageLoader;
+import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.MFGT;
 import cn.ucai.xm_fulicenter.utils.ResultUtils;
 
@@ -38,6 +40,9 @@ public class PersonalCenterFragment extends BaseFragment {
 
     MainActivity mContext;
     User user = null;
+    @BindView(R.id.tv_collect_count)
+    TextView mTvCollectCount;
+
 
     @Nullable
     @Override
@@ -79,6 +84,7 @@ public class PersonalCenterFragment extends BaseFragment {
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mIvUserAvatar);
             mTvUserName.setText(user.getMuserNick());
             syncUserInfo();
+            syncCollectsCount();
         }
     }
 
@@ -113,5 +119,26 @@ public class PersonalCenterFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void syncCollectsCount() {
+        NetDao.getCollectsCount(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result != null && result.isSuccess()) {
+                    mTvCollectCount.setText(result.getMsg());
+                } else {
+                    mTvCollectCount.setText(String.valueOf(0));
+                }
+
+            }
+
+            @Override
+            public void onError(String error) {
+                mTvCollectCount.setText(String.valueOf(0));
+                L.e("error=" + error);
+            }
+        });
+
     }
 }
