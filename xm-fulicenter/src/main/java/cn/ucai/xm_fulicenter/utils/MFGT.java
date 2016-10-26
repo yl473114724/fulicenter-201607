@@ -19,6 +19,8 @@ import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
 import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
+import cn.ucai.xm_fulicenter.bean.MessageBean;
+import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 
 /**
  * Created by yanglei on 2016/10/14.
@@ -122,4 +124,5 @@ public class MFGT {
     public static void gotoCollects(Activity context) {
         startActivity(context, CollectsActivity.class);
     }
-}
+
+    }
