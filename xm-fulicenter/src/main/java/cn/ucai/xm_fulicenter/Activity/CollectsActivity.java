@@ -15,7 +15,6 @@ import cn.ucai.xm_fulicenter.FuLiCenterApplication;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.adapter.CollectsAdapter;
-import cn.ucai.xm_fulicenter.adapter.GoodsAdapter;
 import cn.ucai.xm_fulicenter.bean.CollectBean;
 import cn.ucai.xm_fulicenter.bean.User;
 import cn.ucai.xm_fulicenter.net.NetDao;
