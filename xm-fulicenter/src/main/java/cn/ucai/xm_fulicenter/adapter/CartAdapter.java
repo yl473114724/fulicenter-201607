@@ -18,10 +18,14 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.CartBean;
 import cn.ucai.xm_fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.xm_fulicenter.bean.MessageBean;
+import cn.ucai.xm_fulicenter.net.NetDao;
+import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.ImageLoader;
 
 public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
@@ -61,6 +65,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
                 mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
             }
         });
+        holder.mivCartAdd.setTag(position);
     }
 
     @Override
@@ -94,5 +99,25 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
             super(view);
             ButterKnife.bind(this, view);
         }
+        @OnClick(R.id.iv_cart_add)
+        public void addCart(){
+            final int position = (int) mivCartAdd.getTag();
+            CartBean cart = mlist.get(position);
+            NetDao.updateCart(mContext, cart.getId(), cart.getCount() + 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if(result!=null && result.isSuccess()){
+                        mlist.get(position).setCount(mlist.get(position).getCount()+1);
+                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                        mtvCartCount.setText("("+(mlist.get(position).getCount())+")");
+                    }
+                }
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+        }
+
     }
 }
