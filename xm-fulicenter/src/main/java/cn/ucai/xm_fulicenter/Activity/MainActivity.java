@@ -15,6 +15,7 @@ import cn.ucai.xm_fulicenter.FuLiCenterApplication;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.xm_fulicenter.fragment.CartFragment;
 import cn.ucai.xm_fulicenter.fragment.CategoryFragment;
 import cn.ucai.xm_fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.xm_fulicenter.fragment.PersonalCenterFragment;
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
     BoutiqueFragment mBoutioueFragment;
     CategoryFragment mCategoryFragment;
     PersonalCenterFragment mpresonalCenterFragment;
+    CartFragment mCartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +60,11 @@ public class MainActivity extends BaseActivity {
         mBoutioueFragment = new BoutiqueFragment();
         mCategoryFragment = new CategoryFragment();
         mpresonalCenterFragment = new PersonalCenterFragment();
+        mCartFragment = new CartFragment();
         mfragments[0] = mNewGoodsFragment;
         mfragments[1] = mBoutioueFragment;
         mfragments[2] = mCategoryFragment;
+        mfragments[3] = mCartFragment;
         mfragments[4] = mpresonalCenterFragment;
         getSupportFragmentManager()
                 .beginTransaction()
@@ -98,7 +102,7 @@ public class MainActivity extends BaseActivity {
     public void onCheckedChange(View v) {
         switch (v.getId()) {
             case R.id.layout_new_good:
-                indx=0;
+                indx = 0;
                 break;
             case R.id.layout_boutique:
                 indx = 1;
@@ -107,7 +111,11 @@ public class MainActivity extends BaseActivity {
                 indx = 2;
                 break;
             case R.id.layout_cart:
-                indx = 3;
+                if (FuLiCenterApplication.getUser() == null) {
+                    MFGT.gotoLoginFromCart( this);
+                } else {
+                    indx = 3;
+                }
                 break;
             case R.id.layout_personal_center:
                 if (FuLiCenterApplication.getUser() == null) {
@@ -134,17 +142,17 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setRadioButtonstate() {
-        for (int i=0;i<abs.length;i++) {
-           if (i == indx) {
-               abs[i].setChecked(true);
-           } else {
-               abs[i].setChecked(false);
-           }
-       }
+        for (int i = 0; i < abs.length; i++) {
+            if (i == indx) {
+                abs[i].setChecked(true);
+            } else {
+                abs[i].setChecked(false);
+            }
+        }
     }
 
     public void onBackPressed() {
-     finish();
+        finish();
     }
 
     @Override
@@ -159,8 +167,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
-            indx = 4;
+        if (FuLiCenterApplication.getUser() != null) {
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                indx = 4;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                indx = 3;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import java.io.File;
 import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.BoutiqueBean;
+import cn.ucai.xm_fulicenter.bean.CartBean;
 import cn.ucai.xm_fulicenter.bean.CategoryChildBean;
 import cn.ucai.xm_fulicenter.bean.CategoryGroupBean;
 import cn.ucai.xm_fulicenter.bean.CollectBean;
@@ -15,6 +16,8 @@ import cn.ucai.xm_fulicenter.bean.MessageBean;
 import cn.ucai.xm_fulicenter.bean.NewGoodsBean;
 import cn.ucai.xm_fulicenter.bean.Result;
 import cn.ucai.xm_fulicenter.utils.MD5;
+
+import static cn.ucai.xm_fulicenter.I.Property.goodsId;
 
 
 public class NetDao {
@@ -159,5 +162,11 @@ public class NetDao {
                 .execute(listener);
 
     }
-
+    public static void downloadCart(Context context,String username,OkHttpUtils.OnCompleteListener<CartBean[]> listener){
+        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_CARTS)
+                .addParam(I.Cart.USER_NAME,username)
+                .targetClass(CartBean[].class)
+                .execute(listener);
+    }
 }
