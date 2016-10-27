@@ -36,8 +36,6 @@ import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
 public class CartFragment extends BaseFragment {
     @BindView(R.id.tv_refresh)
     TextView mtvRefresh;
-    @BindView(R.id.rv)
-    RecyclerView mrv;
     @BindView(R.id.srl)
     SwipeRefreshLayout msrl;
     LinearLayoutManager llm;
@@ -52,6 +50,8 @@ public class CartFragment extends BaseFragment {
     RelativeLayout mlayoutCart;
     @BindView(R.id.tv_nothing)
     TextView tvNothing;
+    @BindView(R.id.rv)
+    RecyclerView mrv;
     private boolean cartLayout;
 
     @Nullable
@@ -136,6 +136,7 @@ public class CartFragment extends BaseFragment {
     public void setCartLayout(boolean hasCart) {
         mlayoutCart.setVisibility(hasCart ? View.VISIBLE : View.GONE);
         tvNothing.setVisibility(hasCart ? View.GONE : View.VISIBLE);
+        mrv.setVisibility(hasCart ? View.VISIBLE : View.GONE);
     }
 
     @OnClick(R.id.tv_cart_buy)
