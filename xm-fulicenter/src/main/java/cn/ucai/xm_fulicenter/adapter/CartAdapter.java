@@ -16,8 +16,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.bean.CartBean;
+import cn.ucai.xm_fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.xm_fulicenter.utils.ImageLoader;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     Context mContext;
@@ -41,11 +44,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(CartViewHolder holder, int position) {
         CartBean CartBean = mlist.get(position);
-//        ImageLoader.downloadImg(mContext,holder.mivBoutiqueImg,CartBean.getImageurl());
-//        holder.mtvBoutiqueTitle.setText(CartBean.getTitle());
-//        holder.mtvBoutiqueName.setText(CartBean.getName());
-//        holder.mtvBoutiqueDescription.setText(CartBean.getDescription());
-//        holder.mlayoutBoutiqueItem.setTag(CartBean);
+        GoodsDetailsBean goods = CartBean.getGoods();
+        if (goods != null) {
+            ImageLoader.downloadImg(mContext, holder.mivCartThumb, goods.getGoodsThumb());
+            holder.mtvCartGoodName.setText(goods.getGoodsName());
+            holder.mtvCartPrice.setText(goods.getShopPrice());
+        }
+        holder.mtvCartCount.setText("(" + CartBean.getCount() + ")");
+        holder.mcbCatrSelected.setChecked(false);
+
     }
 
     @Override
