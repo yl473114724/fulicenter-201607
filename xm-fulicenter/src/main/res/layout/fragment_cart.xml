@@ -10,22 +10,23 @@
         android:layout_height="60dp">
         <TextView
             android:id="@+id/tv_cart_sum_price"
+            android:layout_toLeftOf="@+id/tv_cart_buy"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="合计：¥888.00"
+            android:text="合计：¥：0.00"
             android:textColor="#f90"
             android:textSize="18sp"/>
         <TextView
             android:id="@+id/tv_cart_save_price"
-            android:layout_alignLeft="@+id/tv_cart_sum_price"
+            android:layout_toLeftOf="@+id/tv_cart_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_cart_sum_price"
             android:textColor="@color/google_red"
-            android:text="节省：¥：666.00"
-            android:textSize="16sp"
+            android:text="节省：¥：0.00"
+            android:textSize="18sp"
             />
         <TextView
             android:id="@+id/tv_cart_buy"
@@ -47,28 +48,32 @@
         android:layout_above="@id/layout_cart"
         android:background="@color/list_background">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <include layout="@layout/layout_refresh_title"/>
-            <TextView
-                android:id="@+id/tv_nothing"
-                android:layout_below="@id/layout_cart"
-                android:layout_marginTop="50dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="购物车空空如也"
-                android:textColor="@color/orange"
-                android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <include layout="@layout/layout_refresh_title"/>
+        <TextView
+            android:id="@+id/tv_nothing"
+            android:layout_below="@id/layout_cart"
+            android:layout_marginTop="50dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="购物车空空如也"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
 </RelativeLayout>

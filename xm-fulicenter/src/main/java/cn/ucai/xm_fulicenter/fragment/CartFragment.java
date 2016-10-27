@@ -137,11 +137,32 @@ public class CartFragment extends BaseFragment {
         mlayoutCart.setVisibility(hasCart ? View.VISIBLE : View.GONE);
         tvNothing.setVisibility(hasCart ? View.GONE : View.VISIBLE);
         mrv.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+        sumPrice();
     }
 
     @OnClick(R.id.tv_cart_buy)
     public void onClick() {
     }
 
-
+    private void sumPrice() {
+        int sumPrice = 0;
+        int rankPrice = 0;
+        if (mlist != null && mlist.size() > 0) {
+            for (CartBean c : mlist) {
+                if (c.isChecked()) {
+                    sumPrice += getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
+                    rankPrice += getPrice(c.getGoods().getRankPrice())*c.getCount();
+                }
+            }
+            mtvCartSumPrice.setText("合计：￥"+Double.valueOf(sumPrice));
+            mtvCartSavePrice.setText("节省：￥"+Double.valueOf(sumPrice-rankPrice));
+        } else {
+            mtvCartSumPrice.setText("合计：￥0");
+            mtvCartSavePrice.setText("节省：￥0");
+        }
+    }
+    private int getPrice(String price) {
+        price=price.substring(price.indexOf("￥")+1);
+        return Integer.valueOf(price);
+    }
 }
