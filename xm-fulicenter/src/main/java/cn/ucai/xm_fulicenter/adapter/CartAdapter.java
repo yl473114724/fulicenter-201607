@@ -118,6 +118,30 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
                 }
             });
         }
+        @OnClick(R.id.iv_cart_del)
+        public void delCart(){
+            final int position = (int) mivCartAdd.getTag();
+            CartBean cart = mlist.get(position);
+            if (cart.getCount() > 1) {
 
+                NetDao.updateCart(mContext, cart.getId(), cart.getCount() - 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            mlist.get(position).setCount(mlist.get(position).getCount() - 1);
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                            mtvCartCount.setText("(" + (mlist.get(position).getCount()) + ")");
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+            } else {
+
+            }
+        }
     }
 }
