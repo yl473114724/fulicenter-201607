@@ -57,7 +57,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
             holder.mtvCartPrice.setText(goods.getShopPrice());
         }
         holder.mtvCartCount.setText("(" + CartBean.getCount() + ")");
-        holder.mcbCatrSelected.setChecked(false);
+        holder.mcbCatrSelected.setChecked(CartBean.isChecked());
         holder.mcbCatrSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -140,7 +140,20 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
                     }
                 });
             } else {
+                NetDao.deleteCart(mContext, cart.getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if(result!=null && result.isSuccess()){
+                            mlist.remove(position);
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                            notifyDataSetChanged();
+                             }
+                    }
+                    @Override
+                    public void onError(String error) {
 
+                    }
+                });
             }
         }
     }
