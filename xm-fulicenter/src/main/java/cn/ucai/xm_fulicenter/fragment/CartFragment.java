@@ -1,5 +1,9 @@
 package cn.ucai.xm_fulicenter.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.xm_fulicenter.Activity.MainActivity;
 import cn.ucai.xm_fulicenter.FuLiCenterApplication;
+import cn.ucai.xm_fulicenter.I;
 import cn.ucai.xm_fulicenter.R;
 import cn.ucai.xm_fulicenter.adapter.CartAdapter;
 import cn.ucai.xm_fulicenter.bean.CartBean;
@@ -52,7 +57,9 @@ public class CartFragment extends BaseFragment {
     TextView tvNothing;
     @BindView(R.id.rv)
     RecyclerView mrv;
-    private boolean cartLayout;
+
+
+    updateCartReceiver mReceiver;
 
     @Nullable
     @Override
@@ -70,6 +77,10 @@ public class CartFragment extends BaseFragment {
     @Override
     protected void setListener() {
         setPullDownListener();
+        IntentFilter filter = new IntentFilter(I.BROADCAST_UPDATA_CART);
+        mReceiver = new updateCartReceiver();
+        mContext.registerReceiver(mReceiver,filter);
+
     }
 
     private void setPullDownListener() {
@@ -98,7 +109,9 @@ public class CartFragment extends BaseFragment {
                     msrl.setRefreshing(false);
                     mtvRefresh.setVisibility(View.GONE);
                     if (list != null && list.size() > 0) {
-                        mAdapter.initData(list);
+                        mlist.clear();
+                        mlist.addAll(list);
+                        mAdapter.initData(mlist);
                         setCartLayout(true);
                     } else {
                         setCartLayout(false);
@@ -154,7 +167,7 @@ public class CartFragment extends BaseFragment {
                     rankPrice += getPrice(c.getGoods().getRankPrice())*c.getCount();
                 }
             }
-            mtvCartSumPrice.setText("合计：￥"+Double.valueOf(sumPrice));
+            mtvCartSumPrice.setText("合计：￥"+Double.valueOf(rankPrice));
             mtvCartSavePrice.setText("节省：￥"+Double.valueOf(sumPrice-rankPrice));
         } else {
             mtvCartSumPrice.setText("合计：￥0");
@@ -164,5 +177,22 @@ public class CartFragment extends BaseFragment {
     private int getPrice(String price) {
         price=price.substring(price.indexOf("￥")+1);
         return Integer.valueOf(price);
+    }
+
+    class updateCartReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sumPrice();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mReceiver != null) {
+            mContext.unregisterReceiver(mReceiver);
+
+        }
     }
 }
