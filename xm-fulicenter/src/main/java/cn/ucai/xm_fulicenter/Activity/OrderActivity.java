@@ -229,36 +229,9 @@ public class OrderActivity extends BaseActivity implements PaymentHandler {
                     e.printStackTrace();
                 }
             }
-            int resultCode = data.getExtras().getInt("code");
-            switch (resultCode) {
-                case 1:
-                    paySuccess();
-                    CommonUtils.showLongToast(R.string.pingpp_title_activity_pay_sucessed);
-                    break;
-                case -1:
-                    CommonUtils.showLongToast(R.string.pingpp_pay_failed);
-                    finish();
-                    break;
-            }
+
         }
 
-    }
-
-    private void paySuccess() {
-        for (String id : ids) {
-            NetDao.deleteCart(mContext, Integer.valueOf(id), new OkHttpUtils.OnCompleteListener<MessageBean>() {
-                @Override
-                public void onSuccess(MessageBean result) {
-                    L.e(TAG, "result" + result);
-                }
-
-                @Override
-                public void onError(String error) {
-
-                }
-            });
-        }
-        finish();
     }
 }
 
