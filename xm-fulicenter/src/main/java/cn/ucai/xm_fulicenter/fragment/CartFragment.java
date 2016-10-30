@@ -43,9 +43,11 @@ public class CartFragment extends BaseFragment {
     TextView mtvRefresh;
     @BindView(R.id.srl)
     SwipeRefreshLayout msrl;
-    LinearLayoutManager llm;
+    @BindView(R.id.rv)
+    RecyclerView mrv;
     MainActivity mContext;
     CartAdapter mAdapter;
+    LinearLayoutManager llm;
     ArrayList<CartBean> mlist;
     @BindView(R.id.tv_cart_sum_price)
     TextView mtvCartSumPrice;
@@ -55,8 +57,7 @@ public class CartFragment extends BaseFragment {
     RelativeLayout mlayoutCart;
     @BindView(R.id.tv_nothing)
     TextView tvNothing;
-    @BindView(R.id.rv)
-    RecyclerView mrv;
+
 
 
     updateCartReceiver mReceiver;
@@ -146,7 +147,7 @@ public class CartFragment extends BaseFragment {
         setCartLayout(false);
     }
 
-    public void  setCartLayout(boolean hasCart) {
+    private void  setCartLayout(boolean hasCart) {
         mlayoutCart.setVisibility(hasCart ? View.VISIBLE : View.GONE);
         tvNothing.setVisibility(hasCart ? View.GONE : View.VISIBLE);
         mrv.setVisibility(hasCart ? View.VISIBLE : View.GONE);
@@ -168,9 +169,8 @@ public class CartFragment extends BaseFragment {
                 }
             }
             mtvCartSumPrice.setText("合计：￥"+Double.valueOf(rankPrice));
-            mtvCartSavePrice.setText("节省：￥"+Double.valueOf(sumPrice-rankPrice));
+            mtvCartSavePrice.setText("节省:￥" + Double.valueOf(sumPrice - rankPrice));
         } else {
-            setCartLayout(false);
             mtvCartSumPrice.setText("合计：￥0");
             mtvCartSavePrice.setText("节省：￥0");
         }
@@ -194,7 +194,6 @@ public class CartFragment extends BaseFragment {
         super.onDestroy();
         if (mReceiver != null) {
             mContext.unregisterReceiver(mReceiver);
-
         }
     }
 }

@@ -27,6 +27,7 @@ import cn.ucai.xm_fulicenter.bean.MessageBean;
 import cn.ucai.xm_fulicenter.net.NetDao;
 import cn.ucai.xm_fulicenter.net.OkHttpUtils;
 import cn.ucai.xm_fulicenter.utils.ImageLoader;
+import cn.ucai.xm_fulicenter.utils.MFGT;
 
 public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
     Context mContext;
@@ -99,6 +100,13 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
             super(view);
             ButterKnife.bind(this, view);
         }
+        @OnClick({R.id.iv_cart_thumb,R.id.tv_cart_good_name,R.id.tv_cart_price})
+        public void gotoDetail(){
+            final int position = (int) mivCartAdd.getTag();
+            CartBean cart = mlist.get(position);
+            MFGT.gotoGoodsDatailActivity(mContext,cart.getGoodsId());
+        }
+
         @OnClick(R.id.iv_cart_add)
         public void addCart(){
             final int position = (int) mivCartAdd.getTag();
