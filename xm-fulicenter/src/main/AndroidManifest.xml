@@ -261,6 +261,10 @@
             android:theme="@style/EbpayThemeActivit"
           android:windowSoftInputMode="stateHidden" />
         <!--pinggg end-->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
     </application>
 
 </manifest>
