@@ -34,6 +34,8 @@ import cn.ucai.xm_fulicenter.utils.L;
 import cn.ucai.xm_fulicenter.utils.ResultUtils;
 import cn.ucai.xm_fulicenter.view.SpaceItemDecoration;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by yanglei on 2016/10/19.
  */
@@ -196,4 +198,12 @@ public class CartFragment extends BaseFragment {
             mContext.unregisterReceiver(mReceiver);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        L.e(TAG,"onResume.......");
+        initData();
+        }
+
 }
