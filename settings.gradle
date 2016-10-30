@@ -1,1 +1,1 @@
-include ':app', ':xm-fulicenter'
+include ':app', ':xm-fulicenter', ':lib:bdwallet_pay_sdk', ':lib:pingpp', ':lib:pingpp_one'
